@@ -1,0 +1,550 @@
+#:kivy 2.3.0
+#:import utils kivy.utils
+
+<TopBar@BoxLayout>:
+    title_text: ""
+    show_back: True
+    back_callback: None
+    extra_callback: None
+    extra_text: ""
+    size_hint_y: None
+    height: dp(56)
+    padding: dp(8), dp(4)
+    spacing: dp(8)
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, 0.55
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    Button:
+        text: "< Orqaga" if root.show_back else ""
+        opacity: 1 if root.show_back else 0
+        disabled: not root.show_back
+        size_hint_x: None
+        width: dp(110)
+        background_normal: ""
+        background_color: 1, 1, 1, 1
+        color: utils.get_color_from_hex("#1b5e20")
+        bold: True
+        on_release: root.back_callback() if root.back_callback else None
+
+    Label:
+        text: root.title_text
+        color: utils.get_color_from_hex("#1b5e20")
+        bold: True
+        font_size: "20sp"
+        halign: "center"
+        valign: "middle"
+        text_size: self.size
+
+    Button:
+        text: root.extra_text
+        opacity: 1 if root.extra_text else 0
+        disabled: not root.extra_text
+        size_hint_x: None
+        width: dp(110)
+        background_normal: ""
+        background_color: 1, 1, 1, 1
+        color: utils.get_color_from_hex("#1565c0")
+        bold: True
+        on_release: root.extra_callback() if root.extra_callback else None
+
+
+<SectionCard@BoxLayout>:
+    orientation: "vertical"
+    name: ""
+    icon: ""
+    desc: ""
+    press_callback: None
+    padding: dp(10)
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, 1
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [dp(14)]
+        Color:
+            rgba: utils.get_color_from_hex("#a5d6a7")
+        Line:
+            rounded_rectangle: (self.x, self.y, self.width, self.height, dp(14))
+            width: 1.3
+
+    Label:
+        text: root.icon
+        font_size: "30sp"
+        size_hint_y: 0.45
+
+    Label:
+        text: root.name
+        color: utils.get_color_from_hex("#1b5e20")
+        bold: True
+        font_size: "17sp"
+        size_hint_y: 0.3
+
+    Label:
+        text: root.desc
+        color: 0.35, 0.35, 0.35, 1
+        font_size: "11sp"
+        size_hint_y: 0.25
+
+    Button:
+        background_normal: ""
+        background_color: 0, 0, 0, 0
+        size_hint: None, None
+        pos: root.pos
+        size: root.size
+        on_release: root.press_callback() if root.press_callback else None
+
+
+<HomeScreen>:
+    FloatLayout:
+        Image:
+            id: bg_image
+            allow_stretch: True
+            keep_ratio: False
+            size_hint: 1, 1
+            pos_hint: {"x": 0, "y": 0}
+
+        BoxLayout:
+            orientation: "vertical"
+            size_hint: 1, 1
+            padding: dp(16)
+            spacing: dp(10)
+
+            Label:
+                text: "Studex"
+                color: utils.get_color_from_hex("#1b5e20")
+                bold: True
+                font_size: "34sp"
+                size_hint_y: 0.13
+
+            Label:
+                text: "IELTS tayyorgarlik yordamchingiz"
+                color: utils.get_color_from_hex("#33691e")
+                font_size: "14sp"
+                size_hint_y: 0.06
+
+            Button:
+                text: "  Jo'rabek AI -- IELTS AI yordamchi"
+                size_hint_y: 0.08
+                background_normal: ""
+                background_color: utils.get_color_from_hex("#1565c0")
+                color: 1, 1, 1, 1
+                bold: True
+                font_size: "15sp"
+                on_release: root.open_jorabek()
+
+            GridLayout:
+                id: section_grid
+                cols: 2
+                spacing: dp(14)
+                size_hint_y: 0.62
+                padding: dp(4)
+
+            Label:
+                text: "(c) 2026 Studex -- Play Market uchun tayyorlanmoqda"
+                color: 0.45, 0.45, 0.45, 1
+                font_size: "10sp"
+                size_hint_y: 0.05
+
+
+<PlaceholderScreen>:
+    FloatLayout:
+        Image:
+            id: bg_image
+            allow_stretch: True
+            keep_ratio: False
+            size_hint: 1, 1
+
+        BoxLayout:
+            orientation: "vertical"
+            size_hint: 1, 1
+
+            TopBar:
+                id: topbar
+
+            BoxLayout:
+                orientation: "vertical"
+                padding: dp(24)
+
+                Label:
+                    id: info_label
+                    text: "Bu bo'lim tez orada tayyor bo'ladi.\nMazmuni ustida ishlanmoqda..."
+                    color: utils.get_color_from_hex("#33691e")
+                    font_size: "16sp"
+                    halign: "center"
+                    valign: "middle"
+                    text_size: self.size
+
+
+<VocabularyScreen>:
+    FloatLayout:
+        Image:
+            id: bg_image
+            allow_stretch: True
+            keep_ratio: False
+            size_hint: 1, 1
+
+        BoxLayout:
+            orientation: "vertical"
+            size_hint: 1, 1
+
+            TopBar:
+                id: topbar
+                title_text: "Vocabulary"
+
+            BoxLayout:
+                orientation: "vertical"
+                padding: dp(20)
+                spacing: dp(16)
+
+                BoxLayout:
+                    id: level_buttons
+                    orientation: "vertical"
+                    spacing: dp(12)
+                    size_hint_y: 0.65
+
+                Button:
+                    text: "General Dictionary (Lug'at orqali o'rganish)"
+                    size_hint_y: 0.15
+                    background_normal: ""
+                    background_color: utils.get_color_from_hex("#1565c0")
+                    color: 1, 1, 1, 1
+                    bold: True
+                    on_release: root.open_dictionary()
+
+
+<SubsectionScreen>:
+    FloatLayout:
+        Image:
+            id: bg_image
+            allow_stretch: True
+            keep_ratio: False
+            size_hint: 1, 1
+
+        BoxLayout:
+            orientation: "vertical"
+            size_hint: 1, 1
+
+            TopBar:
+                id: topbar
+
+            BoxLayout:
+                orientation: "vertical"
+                padding: dp(30)
+
+                Button:
+                    text: "Flashcard\n(Ketma-ket o'rganish)"
+                    background_normal: ""
+                    background_color: 1, 1, 1, 1
+                    color: utils.get_color_from_hex("#1b5e20")
+                    bold: True
+                    font_size: "16sp"
+                    on_release: root.open_flashcards()
+
+
+<FlashcardScreen>:
+    FloatLayout:
+        Image:
+            id: bg_image
+            allow_stretch: True
+            keep_ratio: False
+            size_hint: 1, 1
+
+        BoxLayout:
+            orientation: "vertical"
+            size_hint: 1, 1
+
+            TopBar:
+                id: topbar
+
+            BoxLayout:
+                orientation: "vertical"
+                padding: dp(20)
+                spacing: dp(14)
+
+                BoxLayout:
+                    orientation: "vertical"
+                    canvas.before:
+                        Color:
+                            rgba: 1, 1, 1, 1
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+                            radius: [dp(16)]
+                        Color:
+                            rgba: utils.get_color_from_hex("#a5d6a7")
+                        Line:
+                            rounded_rectangle: (self.x, self.y, self.width, self.height, dp(16))
+                            width: 1.5
+                    padding: dp(20)
+                    spacing: dp(8)
+
+                    Label:
+                        id: lbl_word
+                        text: ""
+                        color: utils.get_color_from_hex("#1b5e20")
+                        bold: True
+                        font_size: "26sp"
+                        size_hint_y: 0.3
+
+                    Label:
+                        id: lbl_trans
+                        text: ""
+                        color: 0.25, 0.25, 0.25, 1
+                        font_size: "17sp"
+                        size_hint_y: 0.2
+
+                    Label:
+                        id: lbl_level
+                        text: ""
+                        color: 0.5, 0.5, 0.5, 1
+                        font_size: "12sp"
+                        size_hint_y: 0.15
+
+                    Label:
+                        id: lbl_example
+                        text: ""
+                        color: utils.get_color_from_hex("#33691e")
+                        font_size: "14sp"
+                        halign: "center"
+                        valign: "middle"
+                        text_size: self.width, None
+                        size_hint_y: 0.35
+
+                BoxLayout:
+                    size_hint_y: 0.16
+                    spacing: dp(10)
+
+                    Button:
+                        text: "< Oldingi"
+                        background_normal: ""
+                        background_color: 1, 1, 1, 1
+                        color: utils.get_color_from_hex("#1b5e20")
+                        on_release: root.prev_card()
+
+                    Button:
+                        text: "Ovoz"
+                        background_normal: ""
+                        background_color: utils.get_color_from_hex("#e8f5e9")
+                        color: utils.get_color_from_hex("#1b5e20")
+                        on_release: root.play_audio()
+
+                    Button:
+                        text: "Keyingi >"
+                        background_normal: ""
+                        background_color: utils.get_color_from_hex("#1b5e20")
+                        color: 1, 1, 1, 1
+                        on_release: root.next_card()
+
+
+<DictionaryScreen>:
+    FloatLayout:
+        Image:
+            id: bg_image
+            allow_stretch: True
+            keep_ratio: False
+            size_hint: 1, 1
+
+        BoxLayout:
+            orientation: "vertical"
+            size_hint: 1, 1
+
+            TopBar:
+                id: topbar
+                title_text: "General Dictionary"
+
+            BoxLayout:
+                orientation: "vertical"
+                padding: dp(12)
+                spacing: dp(8)
+
+                BoxLayout:
+                    size_hint_y: None
+                    height: dp(44)
+                    spacing: dp(6)
+
+                    TextInput:
+                        id: search_input
+                        hint_text: "So'zni qidiring..."
+                        multiline: False
+                        font_size: "15sp"
+                        on_text: root.on_search_change(self.text)
+                        on_text_validate: root.ask_ai_for_word()
+
+                    Button:
+                        text: "AI'dan so'ra"
+                        size_hint_x: None
+                        width: dp(110)
+                        background_normal: ""
+                        background_color: utils.get_color_from_hex("#1565c0")
+                        color: 1, 1, 1, 1
+                        on_release: root.ask_ai_for_word()
+
+                BoxLayout:
+                    size_hint_y: 0.45
+                    canvas.before:
+                        Color:
+                            rgba: 1, 1, 1, 1
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
+
+                    ScrollView:
+                        GridLayout:
+                            id: word_list
+                            cols: 1
+                            size_hint_y: None
+                            height: self.minimum_height
+                            row_default_height: dp(40)
+                            row_force_default: True
+
+                BoxLayout:
+                    orientation: "vertical"
+                    size_hint_y: 0.45
+                    padding: dp(14)
+                    spacing: dp(6)
+                    canvas.before:
+                        Color:
+                            rgba: utils.get_color_from_hex("#f9fbf9")
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
+                        Color:
+                            rgba: utils.get_color_from_hex("#a5d6a7")
+                        Line:
+                            rectangle: (self.x, self.y, self.width, self.height)
+                            width: 1
+
+                    Label:
+                        id: det_word
+                        text: "So'zni tanlang"
+                        bold: True
+                        font_size: "18sp"
+                        color: utils.get_color_from_hex("#1b5e20")
+                        size_hint_y: 0.25
+
+                    Label:
+                        id: det_trans
+                        text: ""
+                        font_size: "14sp"
+                        color: 0.2, 0.2, 0.2, 1
+                        halign: "left"
+                        valign: "top"
+                        text_size: self.width, None
+                        size_hint_y: 0.45
+
+                    Label:
+                        id: det_example
+                        text: ""
+                        font_size: "13sp"
+                        color: utils.get_color_from_hex("#33691e")
+                        halign: "left"
+                        valign: "top"
+                        text_size: self.width, None
+                        size_hint_y: 0.2
+
+                    Button:
+                        id: det_audio_btn
+                        text: "Talaffuz"
+                        size_hint_y: 0.15
+                        disabled: True
+                        background_normal: ""
+                        background_color: 1, 1, 1, 1
+                        color: utils.get_color_from_hex("#1b5e20")
+                        on_release: root.play_selected_audio()
+
+
+<ChatBubble@BoxLayout>:
+    sender: ""
+    msg: ""
+    is_user: False
+    size_hint_y: None
+    height: self.minimum_height
+    orientation: "vertical"
+    padding: dp(10), dp(6)
+
+    Label:
+        text: root.sender
+        bold: True
+        font_size: "12sp"
+        color: utils.get_color_from_hex("#1565c0") if not root.is_user else utils.get_color_from_hex("#1b5e20")
+        size_hint_y: None
+        height: self.texture_size[1]
+        halign: "left"
+        text_size: self.width, None
+
+    Label:
+        text: root.msg
+        font_size: "14sp"
+        color: 0.1, 0.1, 0.1, 1
+        size_hint_y: None
+        height: self.texture_size[1]
+        halign: "left"
+        valign: "top"
+        text_size: self.width, None
+        padding: dp(8), dp(6)
+        canvas.before:
+            Color:
+                rgba: (utils.get_color_from_hex("#e3f2fd") if not root.is_user else (0.93, 0.96, 0.93, 1))
+            RoundedRectangle:
+                pos: self.pos
+                size: self.size
+                radius: [dp(8)]
+
+
+<ChatScreen>:
+    FloatLayout:
+        Image:
+            id: bg_image
+            allow_stretch: True
+            keep_ratio: False
+            size_hint: 1, 1
+
+        BoxLayout:
+            orientation: "vertical"
+            size_hint: 1, 1
+
+            TopBar:
+                id: topbar
+                extra_text: "Tarix"
+
+            BoxLayout:
+                orientation: "vertical"
+                padding: dp(8)
+                spacing: dp(6)
+
+                ScrollView:
+                    id: chat_scroll
+                    GridLayout:
+                        id: chat_box
+                        cols: 1
+                        size_hint_y: None
+                        height: self.minimum_height
+                        spacing: dp(4)
+                        padding: dp(4)
+
+                BoxLayout:
+                    size_hint_y: None
+                    height: dp(48)
+                    spacing: dp(6)
+                    padding: 0, dp(4)
+
+                    TextInput:
+                        id: chat_input
+                        hint_text: "Xabar yozing..."
+                        multiline: False
+                        font_size: "15sp"
+                        on_text_validate: root.send_message()
+
+                    Button:
+                        text: "Yuborish"
+                        size_hint_x: None
+                        width: dp(100)
+                        background_normal: ""
+                        background_color: utils.get_color_from_hex("#1565c0")
+                        color: 1, 1, 1, 1
+                        on_release: root.send_message()
