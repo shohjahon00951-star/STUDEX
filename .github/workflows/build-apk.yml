@@ -1,0 +1,25 @@
+name: Build Studex APK
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch: {}
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Repozitoriyni olish
+        uses: actions/checkout@v4
+
+      - name: Buildozer bilan APK yig'ish
+        uses: ArtemSBulgakov/buildozer-action@v1
+        id: buildozer
+        with:
+          command: buildozer android debug
+
+      - name: Tayyor APK'ni yuklash (Artifacts)
+        uses: actions/upload-artifact@v4
+        with:
+          name: studex-apk
+          path: bin/*.apk
